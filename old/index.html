@@ -1,49 +1,1025 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeYou Beauty Concept</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeYou Beauty Concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange:     #E8640A;
+      --orange-lt:  #F7943A;
+      --nude:       #F5E8DC;
+      --brown:      #3A1F1A;
+      --brown-mid:  #6B3A30;
+      --cream:      #FDF7F2;
+      --text:       #2A1510;
+    }
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="beyou.css">
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--nude); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 68px;
+      background: rgba(253, 247, 242, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(232, 100, 10, 0.15);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(58,31,26,.12); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--orange);
+      letter-spacing: -.5px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--brown); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .88rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brown-mid);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color .25s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--orange);
+      transition: width .3s ease;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--orange);
+      color: #fff !important;
+      padding: .5rem 1.3rem;
+      border-radius: 100px;
+      transition: background .25s, transform .2s !important;
+    }
+    .nav-cta:hover { background: var(--brown) !important; transform: scale(1.04); }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--brown);
+      border-radius: 2px;
+      transition: .3s;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 100px 5vw 60px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.06);
+      animation: kenBurns 18s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      from { transform: scale(1.06) translate(0,0); }
+      to   { transform: scale(1.12) translate(-1%,-1%); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(58,31,26,.72) 0%,
+        rgba(232,100,10,.45) 55%,
+        rgba(58,31,26,.8) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--orange-lt);
+      border: 1px solid rgba(247,148,58,.5);
+      padding: .35rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.4rem;
+      animation: fadeUp .8s .2s both;
+    }
+
+    #hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      animation: fadeUp .8s .4s both;
+    }
+    #hero h1 em {
+      font-style: italic;
+      color: var(--orange-lt);
+    }
+
+    #hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,.88);
+      max-width: 520px;
+      margin: 0 auto 2.4rem;
+      line-height: 1.7;
+      animation: fadeUp .8s .6s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp .8s .8s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: .9rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background .25s, transform .2s, box-shadow .25s;
+      box-shadow: 0 8px 28px rgba(232,100,10,.45);
+    }
+    .btn-primary:hover {
+      background: var(--orange-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(232,100,10,.55);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: .9rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.3);
+      transition: background .25s, transform .2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,.22);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      color: rgba(255,255,255,.6);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      animation: fadeUp .8s 1.2s both;
+      text-decoration: none;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.6), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: .5; transform: scaleY(1); }
+      50%      { opacity: 1;  transform: scaleY(1.2); }
+    }
+
+    /* ─── STATS BAND ─── */
+    .stats-band {
+      background: var(--brown);
+      padding: 2.8rem 5vw;
+      display: flex;
+      justify-content: center;
+      gap: clamp(1.5rem, 5vw, 5rem);
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s, transform .6s;
+    }
+    .stat.visible { opacity: 1; transform: none; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--orange-lt);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      margin-top: .3rem;
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 6rem 5vw; }
+
+    .section-tag {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: .7rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--brown);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-images {
+      position: relative;
+      height: 480px;
+    }
+    .about-img {
+      position: absolute;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(58,31,26,.18);
+    }
+    .about-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-img-main {
+      width: 72%;
+      height: 88%;
+      top: 0; left: 0;
+    }
+    .about-img-accent {
+      width: 50%;
+      height: 52%;
+      bottom: 0; right: 0;
+      border: 4px solid var(--cream);
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 30px; left: 30px;
+      background: var(--orange);
+      color: #fff;
+      padding: .9rem 1.3rem;
+      border-radius: 14px;
+      z-index: 2;
+      box-shadow: 0 10px 30px rgba(232,100,10,.4);
+    }
+    .about-badge strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .about-badge span {
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .9;
+    }
+
+    .about-text .section-title { margin-bottom: 1.5rem; }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--brown-mid);
+      margin-bottom: 1.2rem;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+      margin-top: 2rem;
+    }
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--brown);
+    }
+    .feature-dot {
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: #fff; }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .services-header .section-title { margin-bottom: 1rem; }
+    .services-header p {
+      color: var(--brown-mid);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--cream);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+      opacity: 0;
+      transform: translateY(30px);
+      will-change: transform;
+    }
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 64px rgba(58,31,26,.15);
+    }
+
+    .service-img {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    .service-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .service-card:hover .service-img img { transform: scale(1.07); }
+
+    .service-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(58,31,26,.5) 0%, transparent 60%);
+    }
+
+    .service-body {
+      padding: 1.6rem;
+    }
+    .service-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: .6rem;
+    }
+    .service-body p {
+      font-size: .88rem;
+      line-height: 1.7;
+      color: var(--brown-mid);
+      margin-bottom: 1.3rem;
+    }
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--orange);
+      text-decoration: none;
+      letter-spacing: .03em;
+      transition: gap .25s, color .2s;
+    }
+    .service-link:hover { gap: .7rem; color: var(--brown); }
+    .service-link svg { transition: transform .25s; }
+    .service-link:hover svg { transform: translateX(3px); }
+
+    .services-cta {
+      text-align: center;
+      margin-top: 4rem;
+    }
+    .services-cta p {
+      font-size: 1.1rem;
+      color: var(--brown-mid);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      text-align: center;
+      padding: 8rem 5vw;
+    }
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(58,31,26,.88), rgba(232,100,10,.6));
+    }
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+    #cta .section-tag { color: rgba(255,255,255,.7); }
+    #cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.15;
+    }
+    #cta p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.82);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    #cta .btn-primary {
+      background: #fff;
+      color: var(--orange);
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+    #cta .btn-primary:hover {
+      background: var(--nude);
+      transform: translateY(-3px);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--brown);
+      color: rgba(255,255,255,.7);
+      padding: 4rem 5vw 2.5rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .nav-logo {
+      font-size: 1.6rem;
+      display: block;
+      margin-bottom: 1rem;
+      color: var(--orange-lt);
+    }
+    .footer-brand .nav-logo span { color: #fff; }
+    .footer-brand p {
+      font-size: .9rem;
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col ul a {
+      color: rgba(255,255,255,.65);
+      text-decoration: none;
+      font-size: .88rem;
+      transition: color .2s;
+    }
+    .footer-col ul a:hover { color: var(--orange-lt); }
+    .footer-col p {
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: .8rem;
+      color: rgba(255,255,255,.4);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── MOBILE NAV ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(253,247,242,.97);
+      backdrop-filter: blur(14px);
+      padding: 1.5rem 5vw 2rem;
+      z-index: 99;
+      border-bottom: 1px solid rgba(232,100,10,.15);
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--brown);
+      text-decoration: none;
+      padding: .5rem 0;
+      border-bottom: 1px solid rgba(58,31,26,.07);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .about-images { height: 340px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 580px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .about-img-accent { display: none; }
+      .about-images { height: 280px; }
+      .about-img-main { width: 100%; height: 100%; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .wa-float {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      width: 58px; height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,.4);
+      z-index: 200;
+      transition: transform .25s, box-shadow .25s;
+      text-decoration: none;
+    }
+    .wa-float:hover {
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 10px 32px rgba(37,211,102,.5);
+    }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+  </style>
 </head>
-<body><header class="relative bg-gradient-to-r from-orange-400 to-orange-600 text-white py-16 md:py-24 overflow-hidden"><!-- Imagem de fundo sutil para dar contexto ao salão --><div class="absolute inset-0 z-0 opacity-20 bg-[url('https://source.unsplash.com/random/1600x900?beauty-salon-interior,hairdresser,makeup')] bg-cover bg-center"></div><div class="container mx-auto px-4 text-center relative z-10"><h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg text-stone-900">BeYou Beauty Concept</h1><p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-md text-white">
-                Onde a sua beleza é a nossa prioridade. Realize seu sonho de transformação!
-            </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços do BeYou e agendar meu momento." target="_blank" class="inline-block bg-stone-900 text-white font-bold py-3 px-8 rounded-full text-lg md:text-xl hover:bg-stone-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
-                Fale Conosco Pelo WhatsApp!
-            </a><p class="mt-4 text-sm text-white opacity-80">Clique e descubra o que preparamos para você!</p></div></header><main><!-- Seção "Sobre Nós" --><section id="about" class="py-16 bg-stone-100"><div class="container mx-auto px-4 text-center"><h2 class="text-3xl md:text-4xl font-bold text-stone-900 mb-6">Sua Melhor Versão Começa Aqui!</h2><p class="text-lg leading-relaxed max-w-3xl mx-auto">No BeYou, combinamos paixão pela beleza, técnicas inovadoras e produtos de alta qualidade para oferecer uma experiência única. Nossa equipe de profissionais está pronta para cuidar de você, da cabeça aos pés.
-                </p><p class="mt-4 text-lg leading-relaxed max-w-3xl mx-auto">
-                    Venha desfrutar de um ambiente acolhedor e sair renovada(o), confiante e radiante.
-                </p></div></section><!-- Seção de Serviços --><section id="services" class="py-16 md:py-24 bg-white"><div class="container mx-auto px-4"><h2 class="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-12">Nossos Serviços para Você Brilhar</h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Cartão de Serviço: Cabelos --><div class="bg-stone-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-stone-200"><h3 class="text-2xl font-semibold text-orange-600 mb-4">Cabelos</h3><p class="text-base text-stone-700 leading-relaxed mb-6">
-                            Cortes modernos, coloração personalizada, mechas, tratamentos de hidratação profunda, reconstrução e nutrição. Tudo para a saúde e beleza dos seus fios.
-                        </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços de Cabelos do BeYou." target="_blank" class="block w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out">
-                            Ver Detalhes
-                        </a></div><!-- Cartão de Serviço: Manicure e Pedicure --><div class="bg-stone-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-stone-200"><h3 class="text-2xl font-semibold text-orange-600 mb-4">Manicure e Pedicure</h3><p class="text-base text-stone-700 leading-relaxed mb-6">
-                            Mãos e pés impecáveis com esmaltação tradicional, em gel, alongamento de unhas (fibra, acrílico), e tratamentos relaxantes para o cuidado completo.
-                        </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços de Manicure e Pedicure do BeYou." target="_blank" class="block w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out">
-                            Ver Detalhes
-                        </a></div><!-- Cartão de Serviço: Estética Facial e Corporal --><div class="bg-stone-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-stone-200"><h3 class="text-2xl font-semibold text-orange-600 mb-4">Estética Facial e Corporal</h3><p class="text-base text-stone-700 leading-relaxed mb-6">
-                            Limpeza de pele, massagens relaxantes e modeladoras, depilação com cera ou linha, design de sobrancelhas e muito mais para realçar sua beleza.
-                        </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços de Estética Facial e Corporal do BeYou." target="_blank" class="block w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out">
-                            Ver Detalhes
-                        </a></div><!-- Cartão de Serviço: Maquiagem Profissional --><div class="bg-stone-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-stone-200"><h3 class="text-2xl font-semibold text-orange-600 mb-4">Maquiagem Profissional</h3><p class="text-base text-stone-700 leading-relaxed mb-6">
-                            Maquiagem para todas as ocasiões: festas, noivas, formaturas e eventos especiais. Realce sua beleza com um toque profissional.
-                        </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços de Maquiagem Profissional do BeYou." target="_blank" class="block w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out">
-                            Ver Detalhes
-                        </a></div><!-- Cartão de Serviço: Penteados --><div class="bg-stone-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-stone-200"><h3 class="text-2xl font-semibold text-orange-600 mb-4">Penteados</h3><p class="text-base text-stone-700 leading-relaxed mb-6">
-                            Penteados elaborados para festas, eventos, ou um visual charmoso para o dia a dia. Encontre o estilo perfeito para você.
-                        </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços de Penteados do BeYou." target="_blank" class="block w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out">
-                            Ver Detalhes
-                        </a></div><!-- Cartão de Serviço: Pacotes Especiais --><div class="bg-stone-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-stone-200"><h3 class="text-2xl font-semibold text-orange-600 mb-4">Pacotes Especiais</h3><p class="text-base text-stone-700 leading-relaxed mb-6">
-                            Montamos combos de serviços para noivas, formandas, aniversariantes ou para um dia de rainha. Descubra nossas condições especiais!
-                        </p><a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os Pacotes Especiais do BeYou." target="_blank" class="block w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out">
-                            Ver Detalhes
-                        </a></div></div><div class="text-center mt-12"><p class="text-xl md:text-2xl text-stone-900 mb-6 font-semibold">Deseja um serviço exclusivo ou tem alguma dúvida?</p><a href="https://wa.me/11947936092?text=Olá! Gostaria de conversar sobre um serviço específico ou agendar um atendimento no BeYou." target="_blank" class="inline-block bg-stone-900 text-white font-bold py-4 px-10 rounded-full text-lg md:text-xl hover:bg-stone-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
-                        Converse Conosco Agora!
-                    </a></div></div></section><!-- Seção Final de Chamada para Ação --><section class="bg-gradient-to-r from-stone-900 to-stone-800 text-white py-16 text-center"><div class="container mx-auto px-4"><h2 class="text-3xl md:text-4xl font-bold mb-6 text-orange-400">Pronta para Sua Transformação?</h2><p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-                    Não espere mais para se sentir linda(o) e confiante. Agende seu horário e venha brilhar!
-                </p><a href="https://wa.me/11947936092?text=Olá! Quero agendar um horário no BeYou!" target="_blank" class="inline-block bg-orange-500 text-white font-bold py-4 px-10 rounded-full text-xl md:text-2xl hover:bg-orange-600 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
-                    Agende Seu Horário Pelo WhatsApp!
-                </a></div></section></main><!-- Rodapé --><footer class="bg-stone-900 text-stone-200 py-12"><div class="container mx-auto px-4 text-center"><p class="text-lg mb-4">BeYou Beauty Concept</p><p class="text-md mb-2">Rua das Pitangueiras, 565 - Bairro Jardim - Santo André - SP</p><p class="text-md mb-2">Telefone: (11) 94793-6092</p><p class="text-md">Horário de Funcionamento: Terça a Sábado, 9h às 19h</p><div class="mt-8"><p class="text-sm">© 2025 BeYou Beauty Concept. Todos os direitos reservados.</p><p class="text-xs mt-1">Criado com carinho para o seu bem-estar.</p></div></div></footer></body>
-/html
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" style="display:flex;align-items:center;text-decoration:none;">
+      <img src="beyou_logo.png" alt="BeYou Beauty Concept" style="height:44px;width:auto;display:block;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="#cta">Agendamento</a></li>
+      <li>
+        <a href="https://wa.me/11947936092?text=Olá! Gostaria de agendar um horário no BeYou!" target="_blank" class="nav-cta">
+          WhatsApp
+        </a>
+      </li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="closeMobile()">Sobre Nós</a>
+    <a href="#services" onclick="closeMobile()">Serviços</a>
+    <a href="#cta" onclick="closeMobile()">Agendamento</a>
+    <a href="https://wa.me/11947936092?text=Olá! Gostaria de agendar no BeYou!" target="_blank" onclick="closeMobile()">📲 Falar pelo WhatsApp</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">✦ Bem-vinda ao BeYou Beauty Concept</span>
+      <h1>Sua beleza,<br><em>seu estilo.</em></h1>
+      <p>Transformações que revelam a melhor versão de você. Técnicas inovadoras, produtos premium e um ambiente feito para você brilhar.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/11947936092?text=Olá! Gostaria de agendar meu horário no BeYou!" target="_blank" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Agendar pelo WhatsApp
+        </a>
+        <a href="#services" class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          Ver Serviços
+        </a>
+      </div>
+    </div>
+    <a href="#about" class="hero-scroll">
+      <span>Descubra</span>
+      <div class="scroll-line"></div>
+    </a>
+  </section>
+
+  <!-- STATS BAND -->
+  <div class="stats-band">
+    <div class="stat">
+      <div class="stat-number">+500</div>
+      <div class="stat-label">Clientes Satisfeitas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">6+</div>
+      <div class="stat-label">Anos de Experiência</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Especialidades</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">★ 5.0</div>
+      <div class="stat-label">Avaliação dos Clientes</div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="about-images reveal">
+        <div class="about-img about-img-main">
+          <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&q=80" alt="Salão BeYou" />
+        </div>
+        <div class="about-img about-img-accent">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80" alt="Tratamento de beleza" />
+        </div>
+        <div class="about-badge">
+          <strong>BeYou</strong>
+          <span>Santo André, SP</span>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <p class="section-tag reveal">Sobre Nós</p>
+        <h2 class="section-title reveal">Sua Melhor Versão<br><em>Começa Aqui</em></h2>
+        <p class="reveal">No BeYou, combinamos paixão pela beleza, técnicas inovadoras e produtos de alta qualidade para oferecer uma experiência única e transformadora.</p>
+        <p class="reveal">Nossa equipe de profissionais está pronta para cuidar de você, da cabeça aos pés, em um ambiente acolhedor e sofisticado. Saia renovada(o), confiante e radiante.</p>
+        <div class="about-features">
+          <div class="about-feature reveal">
+            <div class="feature-dot"></div>
+            Profissionais certificados e apaixonados
+          </div>
+          <div class="about-feature reveal">
+            <div class="feature-dot"></div>
+            Produtos premium de alta qualidade
+          </div>
+          <div class="about-feature reveal">
+            <div class="feature-dot"></div>
+            Ambiente acolhedor e personalizado
+          </div>
+          <div class="about-feature reveal">
+            <div class="feature-dot"></div>
+            Atendimento de terça a sábado, 9h–19h
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="services-header">
+        <p class="section-tag reveal">O Que Oferecemos</p>
+        <h2 class="section-title reveal">Serviços para<br><em>Você Brilhar</em></h2>
+        <p class="reveal">Cada serviço é pensado para realçar sua beleza natural com técnica, cuidado e muito carinho.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=80" alt="Cabelos" loading="lazy" />
+            <div class="service-img-overlay"></div>
+          </div>
+          <div class="service-body">
+            <h3>Cabelos</h3>
+            <p>Cortes modernos, coloração personalizada, mechas, tratamentos de hidratação profunda, reconstrução e nutrição para a saúde e beleza dos seus fios.</p>
+            <a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os serviços de Cabelos do BeYou." target="_blank" class="service-link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&q=80" alt="Manicure e Pedicure" loading="lazy" />
+            <div class="service-img-overlay"></div>
+          </div>
+          <div class="service-body">
+            <h3>Manicure & Pedicure</h3>
+            <p>Mãos e pés impecáveis com esmaltação tradicional, em gel, alongamento de unhas (fibra, acrílico) e tratamentos relaxantes para o cuidado completo.</p>
+            <a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre Manicure e Pedicure do BeYou." target="_blank" class="service-link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=700&q=80" alt="Estética Facial" loading="lazy" />
+            <div class="service-img-overlay"></div>
+          </div>
+          <div class="service-body">
+            <h3>Estética Facial & Corporal</h3>
+            <p>Limpeza de pele, massagens relaxantes, depilação, design de sobrancelhas e muito mais para realçar sua beleza de dentro para fora.</p>
+            <a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre Estética do BeYou." target="_blank" class="service-link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1503236823255-94609f598e71?w=700&q=80" alt="Maquiagem Profissional" loading="lazy" />
+            <div class="service-img-overlay"></div>
+          </div>
+          <div class="service-body">
+            <h3>Maquiagem Profissional</h3>
+            <p>Maquiagem para todas as ocasiões: festas, noivas, formaturas e eventos especiais. Realce sua beleza com um toque de sofisticação.</p>
+            <a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre Maquiagem no BeYou." target="_blank" class="service-link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=700&q=80" alt="Penteados" loading="lazy" />
+            <div class="service-img-overlay"></div>
+          </div>
+          <div class="service-body">
+            <h3>Penteados</h3>
+            <p>Penteados elaborados para festas, eventos ou um visual charmoso para o dia a dia. Encontre o estilo perfeito para cada momento.</p>
+            <a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre Penteados do BeYou." target="_blank" class="service-link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img">
+            <img src="https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=700&q=80" alt="Pacotes Especiais" loading="lazy" />
+            <div class="service-img-overlay"></div>
+          </div>
+          <div class="service-body">
+            <h3>Pacotes Especiais</h3>
+            <p>Combos exclusivos para noivas, formandas e aniversariantes. Um dia inteiro dedicado a você, com condições especiais e atendimento VIP.</p>
+            <a href="https://wa.me/11947936092?text=Olá! Gostaria de saber mais sobre os Pacotes Especiais do BeYou." target="_blank" class="service-link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="services-cta reveal">
+        <p>Quer um serviço exclusivo ou tem alguma dúvida?</p>
+        <a href="https://wa.me/11947936092?text=Olá! Gostaria de conversar sobre um serviço e agendar no BeYou." target="_blank" class="btn-primary" style="display:inline-flex;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Converse Conosco Agora
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+      <div class="cta-content">
+        <p class="section-tag">Pronta para Transformar?</p>
+        <h2>Agende seu momento<br>de autocuidado</h2>
+        <p>Não espere mais para se sentir linda(o) e confiante. Nossa equipe está pronta para criar a sua melhor versão.</p>
+        <a href="https://wa.me/11947936092?text=Olá! Quero agendar meu horário no BeYou!" target="_blank" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Agendar Agora pelo WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" style="display:inline-block;margin-bottom:1rem;background:#fff;border-radius:10px;padding:6px 14px;">
+          <img src="beyou_logo.png" alt="BeYou Beauty Concept" style="height:44px;width:auto;display:block;" />
+        </a>
+        <p>Onde a sua beleza é a nossa prioridade. Venha viver uma experiência única de transformação e autocuidado.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#about">Sobre Nós</a></li>
+          <li><a href="#services">Serviços</a></li>
+          <li><a href="#cta">Agendamento</a></li>
+          <li><a href="https://wa.me/11947936092" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <p>
+          Rua das Pitangueiras, 565<br>
+          Bairro Jardim – Santo André, SP<br><br>
+          📞 (11) 94793-6092<br><br>
+          Terça a Sábado<br>9h às 19h
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 BeYou Beauty Concept. Todos os direitos reservados.</span>
+      <span>Criado com carinho para o seu bem-estar ✦</span>
+    </div>
+  </footer>
+
+  <!-- WhatsApp float button -->
+  <a href="https://wa.me/11947936092?text=Olá! Gostaria de agendar um horário no BeYou!" target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // ─── NAVBAR scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ─── HAMBURGER
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    // ─── INTERSECTION OBSERVER for reveal + service cards + stats
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.dataset.delay || 0;
+          setTimeout(() => el.classList.add('visible'), delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    // Reveal elements
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Stats stagger
+    document.querySelectorAll('.stat').forEach((el, i) => {
+      el.dataset.delay = i * 120;
+      observer.observe(el);
+    });
+
+    // Service cards stagger
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.dataset.delay = i * 100;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
